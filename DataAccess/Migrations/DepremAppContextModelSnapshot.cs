@@ -77,6 +77,22 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "f456259c-75e7-443a-86e8-a0d7aa019038",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "567d3d4f-66d9-4eb8-85af-f05c31aed5cc",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.User", b =>
@@ -132,6 +148,22 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ff99051d-f071-47c2-8883-580142cdb252",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "DEPREMAPPADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDLbk863Dj38jtVwVt1TKltC8le+lswrsiH+i+vZscBsdwqlekyXoh1SklbZsL7e1Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "HSIGJTY7T6U45ALXA4JSEZAPBF67AM6V",
+                            TwoFactorEnabled = false,
+                            UserName = "DepremAppAdmin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -208,6 +240,13 @@ namespace DataAccess.Migrations
                     b.HasKey("UserId", "RoleId");
 
                     b.ToTable("UserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        });
                 });
 #pragma warning restore 612, 618
         }

@@ -125,6 +125,25 @@ namespace DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { 1, "f456259c-75e7-443a-86e8-a0d7aa019038", "Admin", "ADMIN" },
+                    { 2, "567d3d4f-66d9-4eb8-85af-f05c31aed5cc", "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "UserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { 1, 0, "ff99051d-f071-47c2-8883-580142cdb252", null, false, false, null, null, "DEPREMAPPADMIN", "AQAAAAEAACcQAAAAEDLbk863Dj38jtVwVt1TKltC8le+lswrsiH+i+vZscBsdwqlekyXoh1SklbZsL7e1Q==", null, false, "HSIGJTY7T6U45ALXA4JSEZAPBF67AM6V", false, "DepremAppAdmin" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Services.Abstract;
 using Services.Concrete;
@@ -70,17 +71,25 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
+	
 	var dbContext = scope.ServiceProvider.GetRequiredService<DepremAppContext>();
 	dbContext.Database.Migrate();
+
 }
 
+//using (var scope = app.Services.CreateScope())
+//{
+//	var services = scope.ServiceProvider;
+//	await SeedData.InitializeAsync(services);
+//}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseAuthentication();
 
 app.UseHttpsRedirection();
@@ -88,5 +97,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();
