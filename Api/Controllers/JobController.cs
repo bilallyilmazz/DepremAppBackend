@@ -34,27 +34,41 @@ namespace Api.Controllers
 			var userName = principal.Identity.Name;
 			var user=await _userManager.FindByNameAsync(userName);
 
+
+			var isControl = await  _jobService.GetByWorkIdWorkType(user.Id, model.WorkId, model.WorkType);
+			int IsSuccess = 0;
 			Job job = new Job()
 			{
-				WorkId=model.WorkId,
-				Lat=model.Lat,
-				Lng=model.Lng,
-				Date=model.Date,
-				Note=model.Note,
-				WorkType=model.WorkType,
-				UserId=user.Id
+				WorkId = model.WorkId,
+				Lat = model.Lat,
+				Lng = model.Lng,
+				Date = model.Date,
+				Note = model.Note,
+				WorkType = model.WorkType,
+				UserId = user.Id
 			};
 
-			var result=await _jobService.Add(job);
-			if (result>0)
+			if (isControl==null)
 			{
-				return Ok(new { Status = true, Data = result, Message = "Başarılı" });
+				IsSuccess = await _jobService.Add(job);
+
 			}
-			return BadRequest(new { Status = false, Data = result, Message = "Başarısız" });
+			else
+			{
+				job.Id=isControl.Id;
+
+				IsSuccess=await _jobService.Update(job);
+			}
+
+			if (IsSuccess>0)
+			{
+				return Ok(new { Status = true, Data = IsSuccess, Message = "Başarılı" });
+			}
+			return BadRequest(new { Status = false, Data = IsSuccess, Message = "Başarısız" });
 		}
 
 		[Authorize(Roles = "Admin")]
-		[HttpGet("getuserjobs")]
+		[HttpPost("getuserjobs")]
 		public async Task<IActionResult> GetUserJobs(GetUserJobsRequest model)
 		{
 			var result = await _jobService.GetUserJobs(model.UserId,Convert.ToDateTime(model.StartDate).ToUniversalTime(), Convert.ToDateTime(model.EndDate).ToUniversalTime());
