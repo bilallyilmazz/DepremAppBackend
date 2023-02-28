@@ -53,6 +53,7 @@ namespace Services.Concrete
 			return await _jobRepository.GetAll(x=>x.UserId==userId && x.Date>=startDate && x.Date<=endDate);
 		}
 
+
 		public async Task<Job> GetByWorkIdWorkType(int userId, int workId, int workType)
 		{
 			return await _jobRepository.Get(x => x.UserId == userId && x.WorkId == workId && x.WorkType == workType);

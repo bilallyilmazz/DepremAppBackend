@@ -24,7 +24,7 @@ namespace Api.Controllers
 			_userManager = userManager;
 		}
 
-		[Authorize(Roles = "User")]
+		//[Authorize(Roles = "User")]
 		[HttpPost("insert")]
 		public async Task<IActionResult> Insert(JobRequestModel model)
 		{
@@ -79,5 +79,7 @@ namespace Api.Controllers
 			}
 			return BadRequest(new { Status = false, Data = result, Message = "Başarısız" });
 		}
+
+		
 	}
 }

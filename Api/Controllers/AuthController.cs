@@ -123,6 +123,21 @@ namespace Api.Controllers
 			return BadRequest(new { Status = false, Data = users, Message = "Başarısız" });
 
 		}
+
+
+		[Authorize(Roles = "Admin")]
+		[HttpPost("getusersbysearch")]
+		public async Task<IActionResult> GetUserBySearch(string searchKey)
+		{
+			var result = _userManager.Users.Where(x => x.UserName.ToLower().Contains(searchKey.ToLower())).Select(x => new GetUsersResponse() { UserName = x.UserName, UserId = x.Id }).ToList();
+
+			if (result.Count > 0)
+			{
+				return Ok(new { Status = true, Data = result, Message = "Başarılı" });
+			}
+			return BadRequest(new { Status = false, Data = result, Message = "Başarısız" });
+		}
+
 		[Authorize(Roles = "Admin")]
 		[HttpPost("getuserbyid")]
 		public async Task<IActionResult> GetUserById(int id)
@@ -138,6 +153,7 @@ namespace Api.Controllers
 			return BadRequest(new { Status = false, Data = responseUser, Message = "Başarısız" });
 
 		}
+
 
 	}
 }
